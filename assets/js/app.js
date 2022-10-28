@@ -21,13 +21,17 @@ const blogElement = getElement('.blog');
 const locationElement = getElement('.location');
 
 const displayUser = async (username) => {
-
-  showLoading(nameElement)
-  const data = await getUserData(username)
-  nameElement.textContent = `${data.name}`;
-  blogElement.textContent = `${data.blog}`;
-  locationElement.textContent = `${data.location}`;
+  try {
+    showLoading(nameElement)
+    const data = await getUserData(username)
+    nameElement.textContent = `${data.name}`;
+    blogElement.textContent = `${data.blog}`;
+    locationElement.textContent = `${data.location}`;
+  } catch (error) {
+    throw error
+  }
 }
 
 // Ejecucion
-displayUser('stolinski').catch(handleError);
+displayUser('stolinski')
+  .catch(err => handleError(nameElement, err.message));
